@@ -9,6 +9,7 @@
     @Html.ActionLink("Criar Novo Cadastro", "Create", "Fornecedor", null,new { @class = "btn btn-primary badge-pill"})
 </p>
 
+
 <table class="table">
     <thead>
         <tr>
@@ -19,22 +20,25 @@
                 @Html.DisplayNameFor(model => model.RazaoSocial)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CNPJ)
+                @Html.DisplayNameFor(model => model.Categoria)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.CNPJ)
+            </th>
+            <th style="width:30px">
                 @Html.DisplayNameFor(model => model.Endereco)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Cidade)
             </th>
-            <th>
+            <th >
                 @Html.DisplayNameFor(model => model.Estado)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Responsavel)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Telefone)       
+                @Html.DisplayNameFor(model => model.Telefone)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Email)
@@ -52,8 +56,10 @@
                 @Html.DisplayFor(modelItem => item.RazaoSocial)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Categoria)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.CNPJ)
-
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Endereco)
@@ -77,7 +83,7 @@
 
                 <a asp-action="Edit" class="btn btn-success badge badge-success" asp-route-id="@item.Id">Editar</a>  <br />
                 <a asp-action="Details" class="btn btn-info badge badge-info" asp-route-id="@item.Id">Detalhes</a>  <br />
-                <a asp-action="Delete"class="btn btn-danger badge badge-danger" asp-route-id="@item.Id">Excluir</a>
+                <a asp-action="Delete" class="btn btn-danger badge badge-danger" asp-route-id="@item.Id">Excluir</a>
             </td>
         </tr>
 }

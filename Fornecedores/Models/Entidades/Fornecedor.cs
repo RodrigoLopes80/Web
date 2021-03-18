@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 namespace Fornecedores.Models.Entidades
 {
     [Table("Fornecedor")]
-    public class Fornecedor
+        public class Fornecedor
     {
         [Required]
         [Display(Name = "Id",Description ="Código")]
@@ -25,7 +26,11 @@ namespace Fornecedores.Models.Entidades
         [MaxLength(50)]
         [Display(Name = "Razão Social", Description = "Razão Social")]
         public string RazaoSocial { get; set; }
-                  
+
+        [Required(ErrorMessage = "O campo Categoria é obrigatório")]
+        [Display(Name = "Categoria", Description = "Categoria")]
+        public string Categoria { get; set; }
+
         [Required(ErrorMessage = "O campo CNPJ é obrigatório")]
         [MaxLength(14)]       
         [Display(Name = "CNPJ", Description = "CNPJ")]
@@ -48,7 +53,7 @@ namespace Fornecedores.Models.Entidades
         public string Estado { get; set; }
 
         [Required(ErrorMessage = "O campo Responsável é obrigatório.")]
-        [MaxLength(50)]
+        [MaxLength(50)]        
         [Display(Name = "Responsável", Description = "Responsável")]
         public string Responsavel { get; set; }
 
@@ -57,14 +62,13 @@ namespace Fornecedores.Models.Entidades
         [RegularExpression(@"^\(?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$",ErrorMessage = "Tipo de telefone não é válido.")]
 
         [Display(Name = "Telefone", Description = "Telefone")]
-        public string Telefone { get; set; }
+        public string Telefone { get; set; }    
 
         [Required(ErrorMessage = "O campo E-mail é obrigatório.")]
         [MaxLength(60)]
         [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "Este E-mail não é válido.")]
         [Display(Name = "E-mail", Description = "E-mail")]
         public string Email { get; set; }
-
-    }
+    } 
 
 }

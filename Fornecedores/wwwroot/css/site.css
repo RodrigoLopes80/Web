@@ -7,9 +7,17 @@ a.navbar-brand {
   word-break: break-all;
 }
 
+.navbar-light .navbar-brand {
+    color: white;
+    font-size:23px;
+    font-family:'Futura Md BT';    
+}
+
+
+navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-primary box-shadow mb-3
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: #0366d6;
 }
 
 .btn-primary {
@@ -51,6 +59,7 @@ button.accept-policy {
   line-height: inherit;
 }
 
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -58,10 +67,50 @@ html {
   min-height: 100%;
 }
 
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+.container {
+    width: 100%;
+    margin-right: 280px;
+    margin-left: 280px;
 }
+
+.table {
+
+
+   border-spacing: 2px;
+
+
+
+}
+
+
+body {
+    /* Margin bottom by footer height */
+    background: url("/lib/fundo.jpg") no-repeat right top fixed;
+}
+
+th{
+text-align:center;
+
+}
+
+.table thead th {
+    vertical-align: middle;
+    table-layout: fixed;
+    width: 100%;
+    border-bottom: 4px solid #2f7fd0;
+    border-top: 4px solid #2f7fd0;
+    align-content: a;
+    justify-content: left;
+}
+
+.table td, .table th {
+    padding: .75rem;
+    table-layout: fixed;
+    width: 100%;
+    vertical-align: middle;
+    border-top: 1px solid #808080;
+}
+
 .footer {
   position: absolute;
   bottom: 0;
@@ -69,3 +118,4 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+

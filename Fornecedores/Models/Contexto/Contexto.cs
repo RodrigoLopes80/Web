@@ -13,7 +13,6 @@ namespace Fornecedores.Models.Contexto
         {
             Database.GetConnectionString();
         }
-
-        public DbSet<Fornecedor> Fornecedor { get; set; }   
+        public DbSet<Fornecedor> Fornecedor { get; set; }      
     }
 }

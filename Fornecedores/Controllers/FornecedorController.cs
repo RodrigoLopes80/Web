@@ -23,7 +23,12 @@ namespace Fornecedores.Controllers
         {
             return View(await _context.Fornecedor.ToListAsync());
         }
-         
+
+        public async Task<IActionResult> SN()
+        {
+            return View(await _context.Fornecedor.ToListAsync());
+        }
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -48,7 +53,7 @@ namespace Fornecedores.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,NomeFantasia,RazaoSocial,CNPJ,Endereco,Cidade,Estado,Responsavel,Telefone,Email")] Fornecedor fornecedor)
+        public async Task<IActionResult> Create([Bind("Id,NomeFantasia,RazaoSocial,Categoria,CNPJ,Endereco,Cidade,Estado,Responsavel,Telefone,Email")] Fornecedor fornecedor)
         {
 
             if (_context.Fornecedor.Any(c => c.CNPJ == fornecedor.CNPJ))
@@ -86,7 +91,7 @@ namespace Fornecedores.Controllers
          
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,NomeFantasia,RazaoSocial,CNPJ,Endereco,Cidade,Estado,Responsavel,Telefone,Email")] Fornecedor fornecedor)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,NomeFantasia,RazaoSocial,Categoria,CNPJ,Endereco,Cidade,Estado,Responsavel,Telefone,Email")] Fornecedor fornecedor)
         {
             if (id != fornecedor.Id)
             {
