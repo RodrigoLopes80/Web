@@ -9,15 +9,15 @@
 
 <h1>Controle de Fornecedores</h1>
 <p>
-    @Html.ActionLink("Criar Novo Cadastro", "Create", "Fornecedor", null, new { @class = "btn btn-primary badge-pill" })
+    @Html.ActionLink("Criar Novo Usuário", "Create", "Fornecedor", null, new { @class = "btn btn-primary badge-pill" })
 </p>
 <br />
-<form asp-action="Index" method="get">
+<form asp-action="IndexUser" method="get">
     <div class="form-actions no-color">
         <p>
             Pesquisar por <b>Razão Social</b> ou <b>CNPJ</b> <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
             <input type="submit" value="Buscar" class="btn btn-primary" /> ||
-            <a asp-action="Index" class="btn btn-outline-primary"> Lista completa.</a>
+            <a asp-action="IndexUser" class="btn btn-outline-primary"> Lista completa.</a>
         </p>
     </div>
 </form>
@@ -29,7 +29,7 @@
     <thead class="thead-dark">
         <tr>
             <th>
-                <a asp-action="Index" style="color:white" asp-route-sortOrder="@ViewData["NameSortParm"]">NomeFantasia</a>
+                <a asp-action="Index" style="color:white" asp-route-sortOrder="@ViewData["NameSortParm"]">Nome Completo</a>
             </th>
             <th>
                 <a asp-action="Index" style="color:white" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Razao Social</a>

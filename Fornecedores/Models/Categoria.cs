@@ -8,15 +8,15 @@ namespace Fornecedores.Models
 {
       public enum Categoria
       {
-      [Display(Name = "Games")]
-      Games,
-      [Display(Name = "Eletrônicos")]
-      Eletronicos,
-      [Display(Name = "Vestuario")]
-      Vestuario,
-      [Display(Name = "Automotivo")]
-      Automotivo,      
-      [Display(Name = "Alimentação")]
-      Alimentacao,
+        [Display(Name = "Alimentação")]
+        Alimentação,
+        [Display(Name = "Automotivo")]
+        Automotivo,
+        [Display(Name = "Eletrônicos")]
+        Eletrônicos,
+        [Display(Name = "Games")]
+        Games,
+        [Display(Name = "Vestuário")]
+        Vestuário,     
       }
 }

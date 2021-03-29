@@ -28,6 +28,7 @@ namespace Fornecedores.Models.Entidades
         public string RazaoSocial { get; set; }
 
         [Required(ErrorMessage = "O campo Categoria é obrigatório")]
+        [MaxLength(30)]
         [Display(Name = "Categoria", Description = "Categoria")]
         public string Categoria { get; set; }
 
@@ -36,6 +37,12 @@ namespace Fornecedores.Models.Entidades
         [Display(Name = "CNPJ", Description = "CNPJ")]
         [ValidaCNPJ(ErrorMessage  = "O valor é inválido para CNPJ")]
         public string CNPJ { get; set; }
+
+        [Display(Name = "Data do Cadastro", Description = "Data do Cadastro")]
+        [Required(ErrorMessage = "O campo Data do Cadastro é obrigatório.")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? DataCadastro { get; set; }
 
         [MaxLength(50)]
         [Required(ErrorMessage = "O campo Endereço é obrigatório.")]
@@ -69,6 +76,9 @@ namespace Fornecedores.Models.Entidades
         [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "Este E-mail não é válido.")]
         [Display(Name = "E-mail", Description = "E-mail")]
         public string Email { get; set; }
+
+        public bool Exclusao { get; set; }
+     
     } 
 
 }

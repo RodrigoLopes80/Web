@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Fornecedores.Models
 {
-        public enum Estado
+    public enum Estado
         {
-
 
         [Display(Name = "Acre")]
         AC,
@@ -64,23 +63,6 @@ namespace Fornecedores.Models
         SE,
         [Display(Name = "Tocantins")]
         TO,
-     
-    
-     
-          
-           
-          
-    
-
-   
-         
-         
-          
-          
-         
-       
-
-
     }
 }
 

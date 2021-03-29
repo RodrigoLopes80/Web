@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Fornecedores.Models.Contexto;
 using Fornecedores.Models.Entidades;
+using X.PagedList;
+using Fornecedores.Models;
 
 namespace Fornecedores.Controllers
 {
@@ -19,9 +21,54 @@ namespace Fornecedores.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Login()
         {
-            return View(await _context.Fornecedor.ToListAsync());
+            return View();
+        }
+
+
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
+        {
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var fornecedores = from s in _context.Fornecedor
+                           select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                fornecedores = fornecedores.Where(s => s.RazaoSocial.Contains(searchString)
+                                       || s.CNPJ.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    fornecedores = fornecedores.OrderByDescending(s => s.RazaoSocial);
+                    break;
+                case "Date":
+                    fornecedores = fornecedores.OrderBy(s => s.DataCadastro);
+                    break;
+                //case "date_desc":
+                //    fornecedores = fornecedores.OrderByDescending(s => s.EnrollmentDate);
+                //    break;
+                default:
+                    fornecedores = fornecedores.OrderBy(s => s.RazaoSocial);
+                    break;
+            }
+
+            int pageSize = 4;
+            return View(await Paginacao<Fornecedor>.CreateAsync(fornecedores.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         public async Task<IActionResult> SN()
@@ -53,7 +100,7 @@ namespace Fornecedores.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,NomeFantasia,RazaoSocial,Categoria,CNPJ,Endereco,Cidade,Estado,Responsavel,Telefone,Email")] Fornecedor fornecedor)
+        public async Task<IActionResult> Create([Bind("Id,NomeFantasia,RazaoSocial,Categoria,CNPJ,DataCadastro,Endereco,Cidade,Estado,Responsavel,Telefone,Email")] Fornecedor fornecedor)
         {
 
             if (_context.Fornecedor.Any(c => c.CNPJ == fornecedor.CNPJ))
@@ -91,7 +138,7 @@ namespace Fornecedores.Controllers
          
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,NomeFantasia,RazaoSocial,Categoria,CNPJ,Endereco,Cidade,Estado,Responsavel,Telefone,Email")] Fornecedor fornecedor)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,NomeFantasia,RazaoSocial,Categoria,CNPJ,DataCadastro,Endereco,Cidade,Estado,Responsavel,Telefone,Email")] Fornecedor fornecedor)
         {
             if (id != fornecedor.Id)
             {
@@ -143,8 +190,7 @@ namespace Fornecedores.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var fornecedor = await _context.Fornecedor.FindAsync(id);
-            _context.Fornecedor.Remove(fornecedor);
+ 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -154,4 +200,6 @@ namespace Fornecedores.Controllers
             return _context.Fornecedor.Any(e => e.Id == id);
         }
     }
+
+
 }
