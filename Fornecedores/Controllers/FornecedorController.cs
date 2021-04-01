@@ -9,6 +9,7 @@ using Fornecedores.Models.Contexto;
 using Fornecedores.Models.Entidades;
 using X.PagedList;
 using Fornecedores.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Fornecedores.Controllers
 {
@@ -20,15 +21,34 @@ namespace Fornecedores.Controllers
         {
             _context = context;
         }
+           
 
-        public IActionResult Login()
+        [Authorize]
+        public ActionResult UIndex()
         {
-            return View();
+            var usuario = new Usuario();
+            return View(usuario.GetUsuarios());
         }
-
 
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
+
+            var usuario = "Anônimo";
+            var autenticado = false;
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                usuario = HttpContext.User.Identity.Name;
+                autenticado = true;
+            }
+            else
+            {
+                usuario = "Não Logado";
+                autenticado = false;
+            }
+
+            ViewBag.usuario = usuario;
+            ViewBag.autenticado = autenticado;   
+
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
@@ -78,6 +98,22 @@ namespace Fornecedores.Controllers
 
         public async Task<IActionResult> Details(int? id)
         {
+
+            var usuario = "Anônimo";
+            var autenticado = false;
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                usuario = HttpContext.User.Identity.Name;
+                autenticado = true;
+            }
+            else
+            {
+                usuario = "Não Logado";
+                autenticado = false;
+            }
+
+            ViewBag.usuario = usuario;
+            ViewBag.autenticado = autenticado;
             if (id == null)
             {
                 return NotFound();
@@ -95,6 +131,24 @@ namespace Fornecedores.Controllers
 
         public IActionResult Create()
         {
+            var usuario = "Anônimo";
+            var autenticado = false;
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                usuario = HttpContext.User.Identity.Name;
+                autenticado = true;
+            }
+            else
+            {
+                usuario = "Não Logado";
+                autenticado = false;
+            }
+
+            ViewBag.usuario = usuario;
+            ViewBag.autenticado = autenticado;
+
+
+
             return View();
         }
         
@@ -118,11 +172,31 @@ namespace Fornecedores.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+
             return View(fornecedor);
         }
 
         public async Task<IActionResult> Edit(int? id)
         {
+            var usuario = "Anônimo";
+            var autenticado = false;
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                usuario = HttpContext.User.Identity.Name;
+                autenticado = true;
+            }
+            else
+            {
+                usuario = "Não Logado";
+                autenticado = false;
+            }
+
+            ViewBag.usuario = usuario;
+            ViewBag.autenticado = autenticado;
+
+
+
             if (id == null)
             {
                 return NotFound();

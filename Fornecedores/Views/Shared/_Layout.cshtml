@@ -8,27 +8,57 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-primary box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Fornecedor" asp-action="Index">Usuários</a>&nbsp; &nbsp;
-                <a class="navbar-brand" asp-area="" asp-controller="Fornecedor" asp-action="Index">Fornecedores</a>&nbsp; &nbsp;
 
-                <a class="navbar-brand" asp-area="" asp-action="SN" style="align-content:flex-end">Sobre nós</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                    </ul>
+  @if(ViewBag.autenticado == true) { 
+        <header id="Barratop">
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-primary box-shadow mb-3">
+                <div class="container">
+                    <a class="navbar-brand" asp-area="" asp-controller="Usuarios" asp-action="UIndex">Usuári(a)os</a>&nbsp; &nbsp;
+                    <a class="navbar-brand" asp-area="" asp-controller="Fornecedor" asp-action="Index">Fornecedores</a>&nbsp; &nbsp;
+                    <a class="navbar-brand" asp-area="" asp-controller="Email" asp-action="EnviaEmail">Enviar Email</a>&nbsp; &nbsp;
+                    <a class="navbar-brand" asp-area="" asp-action="SN" style="align-content:flex-end">Sobre nós</a>
+
+
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <ul class="navbar-nav flex-grow-1">
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
-    </header>
+
+                <div style="color:white;width:10%">
+                    Bem vind(a)o&nbsp;
+                </div>
+
+      
+                <div class="btn btn-primary">
+
+                    "@ViewBag.usuario
+                </div>
+                <div style="color:white">
+                    &nbsp;||&nbsp;
+                </div>
+
+                <div>
+                    @if (@ViewBag.autenticado == true)
+
+                    {
+                        <form method="post" asp-controller="Login" asp-action="Logout">
+                            <input class="btn btn-outline-warning" type="submit" value="Sair" />
+
+                        </form>
+                    }
+                </div>
+            </nav>
+
+        </header>
+    }
     <div class="container">
         <main role="main" class="pb-5">
-            @RenderBody()   
+            @RenderBody()
         </main>
     </div>
 

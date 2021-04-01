@@ -1,0 +1,46 @@
+﻿
+@model IEnumerable<Fornecedores.Models.Entidades.Usuario>
+
+@{
+    ViewData["Title"] = "Criação de Usuári(a)os";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Usuário(a)s</h1>
+
+<p>
+    @Html.ActionLink("Criar Novo Usuári(a)o", "CreateUser", "Usuarios", null, new { @class = "btn btn-primary badge-pill" })
+</p>
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>@Html.DisplayNameFor(model => model.Nome)</th>
+            <th>@Html.DisplayNameFor(model => model.Login)</th>
+            <th>@Html.DisplayNameFor(model => model.Email)</th>
+            @*  <th>@Html.DisplayNameFor(model => model.Senha)</th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                <td>@Html.DisplayFor(modelItem => item.Login)</td>
+                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                @* <td>@Html.DisplayFor(modelItem => item.Senha)</td>*@
+                <td>
+                    @* <a asp-action="Edit" class="btn btn-success badge badge-success" asp-route-id="@item.Id">Editar</a>  <br />*@
+                    @*<a asp-action="Details" class="btn btn-info badge badge-info" asp-route-id="@item.Id">Detalhes</a>  <br />*@
+                    @* <a asp-action="Delete" class="btn btn-danger badge badge-danger" asp-route-id="@item.Id">Excluir</a>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a class="btn btn-warning" asp-controller="Fornecedor" asp-action="Index">Voltar</a>

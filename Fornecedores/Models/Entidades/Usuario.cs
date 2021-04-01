@@ -10,22 +10,42 @@ using System.Threading.Tasks;
 
 namespace Fornecedores.Models.Entidades
 {
-    [Table("Fornecedor")]
+    [Table("Usuario")]
         public class Usuario
     {
-        [Required]
-        [Display(Name = "Id",Description ="Código")]
-        public int Id { get; set; }
+        [Key]
+
+        public int UserId { get; set; }
 
         [Required(ErrorMessage = "O campo Nome é obrigatório.")]
         [MaxLength(50)]
-        [Display(Name = "Nome",Description = "Nome")]
         public string Nome { get; set; }
 
-        [MaxLength(11)]
-        [Display(Name = "Senha", Description = "Senha")]
+        [MaxLength (10)]
+        [Required(ErrorMessage = "O campo Login é obrigatório.")]
+        public string Login { get; set; }
+
+        [Required(ErrorMessage = "O campo E-mail é obrigatório.")]
+        [MaxLength(60)]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "Este E-mail não é válido.")]
+        [Display(Name = "E-mail", Description = "E-mail")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "O campo Senha é obrigatório.")]
+        [MaxLength(10)]
         public string Senha { get; set; }
-     
-    } 
+
+        public bool Exclusao { get; set; }
+
+
+        public IEnumerable<Usuario> GetUsuarios()
+        {
+            return new List<Usuario>() {
+              new Usuario { UserId = 101, Nome = "Rodrigo Pires Lopes",
+                                 Login = "Rlopes", Email = "drigo.plopes@gmail.com",
+                                 Senha = "123456" }
+                               };
+        }
+    }
 
 }
