@@ -264,7 +264,8 @@ namespace Fornecedores.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
- 
+            var fornecedor = await _context.Fornecedor.FindAsync(id);
+            _context.Fornecedor.Remove(fornecedor);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
