@@ -1,0 +1,28 @@
+﻿@model String
+@if (Model != null)
+{
+    var value = String.Format("{0:(##) ####-#### x}{1}", Model.Substring(0, 10), Model.Substring(10));
+
+
+    Int64 telDig;
+    if (!string.IsNullOrEmpty(value))
+    {
+        if (Int64.TryParse(value.ToString(), out telDig))
+        {
+            string cleantelDigs = telDig.ToString();
+            int digCount = cleantelDigs.Length;
+
+            if (digCount == 10)
+            {
+                <text>@String.Format("{0:(##) ####-####}", telDig)</text>}
+            else if (digCount > 10)
+            {
+                <text>@String.Format("{0:(###) ###-#### x#########}", telDig)</text>}
+            else
+            {
+                <text>@cleantelDigs</text>}
+        }
+    }
+}
+
+

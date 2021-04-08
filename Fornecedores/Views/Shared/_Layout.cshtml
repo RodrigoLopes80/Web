@@ -9,7 +9,8 @@
 </head>
 <body>
 
-  @if(ViewBag.autenticado == true) { 
+    @if (ViewBag.autenticado == true)
+    {
         <header id="Barratop">
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-primary box-shadow mb-3">
                 <div class="container">
@@ -33,7 +34,7 @@
                     Bem vind(a)o&nbsp;
                 </div>
 
-      
+
                 <div class="btn btn-primary">
 
                     "@ViewBag.usuario
@@ -71,6 +72,8 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery.inputmask/inputmask.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://rawgit.com/RobinHerbots/Inputmask/5.x/dist/jquery.inputmask.js"></script>
     @RenderSection("Scripts", required: false)
 
 </body>

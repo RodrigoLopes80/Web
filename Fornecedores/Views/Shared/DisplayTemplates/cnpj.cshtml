@@ -1,0 +1,29 @@
+﻿@model String
+@if (Model != null)
+{
+    var value = String.Format(@"{0:##\.###\.###\/####\-##}", Model.Substring(0, 14), Model.Substring(14));
+
+
+    Int64 cnpjDig;
+    if (!string.IsNullOrEmpty(value))
+    {
+        if (Int64.TryParse(value.ToString(), out cnpjDig))
+        {
+            string cleancnpjDig = cnpjDig.ToString();
+            int digCount = cleancnpjDig.Length;
+
+            if (digCount == 14)
+            {
+                <text>@String.Format(@"{0:##\.###\.###/####\-##}", cnpjDig)</text>}
+
+            else if (digCount == 13)
+            {
+                <text>@String.Format(@"{0:0#\.###\.###/####\-##}", cnpjDig)</text>}
+            else
+            {
+                <text>@cleancnpjDig</text>}
+        }
+    }
+}
+
+

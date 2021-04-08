@@ -9,9 +9,10 @@
 
 <h4>Fornecedor</h4>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form id="formC" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="NomeFantasia" class="control-label"></label>
@@ -37,7 +38,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="CNPJ" class="control-label"></label>
-                <input asp-for="CNPJ" placeholder="Somente números" class="form-control" />
+                <input asp-for="CNPJ" id="cnpj"  placeholder="Somente números" class="form-control" />
                 <span asp-validation-for="CNPJ" class="text-danger"></span>
 
             </div>
@@ -97,7 +98,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Telefone" class="control-label"></label>
-                <input asp-for="Telefone" placeholder="somente números" class="form-control" />
+                <input asp-for="Telefone" id="tel"placeholder="somente números" class="form-control" />
                 <span asp-validation-for="Telefone" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -119,4 +120,13 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+        <script>
+         $(document).ready(function() {
+             $("#cnpj").inputmask('99.999.999/9999-99');
+             $("#cnpj").inputmask({removeMaskOnSubmit: true});
+             $("#tel").inputmask('(99) 9999-9999')
+             $("#tel").inputmask({removeMaskOnSubmit: true});           
+         });
+        </script>
+    }
+

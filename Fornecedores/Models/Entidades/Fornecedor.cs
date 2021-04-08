@@ -1,7 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
-
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -33,8 +32,9 @@ namespace Fornecedores.Models.Entidades
         public string Categoria { get; set; }
 
         [Required(ErrorMessage = "O campo CNPJ é obrigatório")]
-        [MaxLength(14)]       
+        [MaxLength(18)]
         [Display(Name = "CNPJ", Description = "CNPJ")]
+        [UIHint("cnpj")]
         [ValidaCNPJ(ErrorMessage  = "O valor é inválido para CNPJ")]
         public string CNPJ { get; set; }
 
@@ -65,7 +65,8 @@ namespace Fornecedores.Models.Entidades
         public string Responsavel { get; set; }
 
         [Required(ErrorMessage = "O campo Telefone é obrigatório.")]
-        [MaxLength(10)]  
+        [MaxLength(14)]
+        [UIHint("tel")]
         [RegularExpression(@"^\(?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$",ErrorMessage = "Tipo de telefone não é válido.")]
 
         [Display(Name = "Telefone", Description = "Telefone")]
