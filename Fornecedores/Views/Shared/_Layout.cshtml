@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Fornecedores</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -17,7 +18,7 @@
                     <a class="navbar-brand" asp-area="" asp-controller="Usuarios" asp-action="UIndex">Usuári(a)os</a>&nbsp; &nbsp;
                     <a class="navbar-brand" asp-area="" asp-controller="Fornecedor" asp-action="Index">Fornecedores</a>&nbsp; &nbsp;
                     <a class="navbar-brand" asp-area="" asp-controller="Email" asp-action="EnviaEmail">Enviar Email</a>&nbsp; &nbsp;
-                    <a class="navbar-brand" asp-area="" asp-action="SN" style="align-content:flex-end">Sobre nós</a>
+                    <a class="navbar-brand" asp-area="" asp-controller="Fornecedor"asp-action="SN" style="align-content:flex-end">Sobre nós</a>
 
 
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -68,12 +69,18 @@
             &copy; 2021 - CRUD Fornecedores
         </div>
     </footer>
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/lib/jquery.inputmask/inputmask.js"></script>
+    @* <script src="~/lib/jquery.inputmask/inputmask.js"></script>*@
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://rawgit.com/RobinHerbots/Inputmask/5.x/dist/jquery.inputmask.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     @RenderSection("Scripts", required: false)
 
 </body>

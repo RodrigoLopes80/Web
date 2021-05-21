@@ -71,13 +71,15 @@ html {
 }
 
 .container {
-    width: 100%;
+    width: 140%;
     margin-right: 280px;
     margin-left: 280px;
+
 }
 
 .table {
-   border-spacing: 2px;
+    border-spacing: 2px;
+    table-layout:unset;
 }
 
 body {
@@ -85,15 +87,26 @@ body {
 }
 
 th{
-text-align:center;
+    text-align:center;
 
+}
+
+    th.col11 {
+        width: 10px;
+        table-layout: unset;
+    }
+
+
+td.col1 {
+    width: 10px;
+    table-layout: unset;
 }
 
 
 .table thead th {
     vertical-align: middle;
-    table-layout: fixed;
-    width: 100%;
+    table-layout: unset;
+    width: 140%;
     border-bottom: 4px solid #2f7fd0;
     border-top: 4px solid #2f7fd0;
     justify-content: left;
@@ -101,8 +114,8 @@ text-align:center;
 
 .table td, .table th {
     padding: .75rem;
-    table-layout: fixed;
-    width: 100%;
+    table-layout: unset;
+    width: 140%;
     vertical-align: middle;
     border-top: 1px solid #808080;
 }
