@@ -14,7 +14,7 @@ namespace Fornecedores.Models.Entidades
 
         public string CatNome { get; set; }
 
-       public virtual ICollection<Fornecedor> Fcats { get; set; }
+       
     }
 
 }

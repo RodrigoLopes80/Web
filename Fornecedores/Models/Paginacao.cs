@@ -32,7 +32,7 @@ namespace Fornecedores.Models
                 return (PageIndex < TotalPages);
             }
         }
-        public static async Task<Paginacao<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
+        public static async Task<Paginacao<T>> CreateAsync(IQueryable<T> source, List<Entidades.Fornecedor> list, int pageIndex, int pageSize)
         {
             var count = await source.CountAsync();
             var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();

@@ -25,13 +25,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Categoria" class="control-label"></label>
-                <select asp-for="Categoria" class="form-control">
-                    <option value="">Selecione as Categorias</option>
-                    <option value="Alimentação">Alimentação</option>
-                    <option value="Automotivo">Automotivo</option>
-                    <option value="Eletrônicos">Eletrônicos</option>
-                    <option value="Games">Games</option>
-                    <option value="Vestuário">Vestuário</option>
+                <select asp-for="Categoria" id="categoria" multiple="multiple" asp-items="ViewBag.Categorias" class="form-control">           
                 </select>
                 <span asp-validation-for="Categoria" class="text-danger"></span>
             </div>
@@ -91,12 +85,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Responsavel" class="control-label"></label>
-                <input asp-for="Responsavel" class="form-control" />
+                <select asp-for="Responsavel" asp-items="ViewBag.Resp" class="form-control">  </select>
                 <span asp-validation-for="Responsavel" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Telefone" class="control-label"></label>
-                <input asp-for="Telefone"  id="tel" class="form-control" />
+                <input asp-for="Telefone" id="tel" class="form-control" />
                 <span asp-validation-for="Telefone" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -115,15 +109,22 @@
 <div>
     <a asp-action="Index">Voltar</a>
 </div>
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-        <script>
-         $(document).ready(function() {
-             $("#cnpj").inputmask('99.999.999/9999-99');
-             $("#cnpj").inputmask({removeMaskOnSubmit: true});
-             $("#tel").inputmask('(99) 9999-9999')
-             $("#tel").inputmask({removeMaskOnSubmit: true});
-         });
-        </script>
-    }
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            //mascaras
+            $("#cnpj").inputmask('99.999.999/9999-99');
+            $("#cnpj").inputmask({ removeMaskOnSubmit: true });
+            $("#tel").inputmask('(99) 9999-9999');
+            $("#tel").inputmask({ removeMaskOnSubmit: true });
+
+            //multiselectlist
+            $("#categoria").select2({
+                placeholder: "Selecione a(s) categoria(s)",
+                allowClear: true
+            });
+        });
+    </script>
+}
 

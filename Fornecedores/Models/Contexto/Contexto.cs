@@ -15,6 +15,7 @@ namespace Fornecedores.Models.Contexto
         }
               
         public DbSet<Fornecedor> Fornecedor { get; set; }
+        public DbSet<ItemCategoria> ItemCategorias { get; set; }
 
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<UserFornecedor> UserFornecedor { get; set; }
@@ -25,7 +26,7 @@ namespace Fornecedores.Models.Contexto
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+        
             {
                 modelBuilder.Entity<Usuario>()
                    .HasQueryFilter(cad => EF.Property<bool>(cad, "Exclusao") == false);

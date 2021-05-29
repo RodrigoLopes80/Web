@@ -20,8 +20,7 @@ namespace Fornecedores.Controllers
         public FornecedorController(Contexto context)
         {
             _context = context;
-        }
-           
+        }           
 
         [Authorize]
         public ActionResult UIndex()
@@ -47,7 +46,8 @@ namespace Fornecedores.Controllers
             }
 
             ViewBag.usuario = usuario;
-            ViewBag.autenticado = autenticado;   
+            ViewBag.autenticado = autenticado;
+       
 
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
@@ -80,15 +80,15 @@ namespace Fornecedores.Controllers
                     fornecedores = fornecedores.OrderBy(s => s.DataCadastro);
                     break;
                 //case "date_desc":
-                //    fornecedores = fornecedores.OrderByDescending(s => s.EnrollmentDate);
+                //    fornecedores = fornecedores.OrderByDescending(s => s.date);
                 //    break;
                 default:
                     fornecedores = fornecedores.OrderBy(s => s.RazaoSocial);
                     break;
             }
-
+            
             int pageSize = 4;
-            return View(await Paginacao<Fornecedor>.CreateAsync(fornecedores.AsNoTracking(), pageNumber ?? 1, pageSize));
+            return View(await Paginacao<Fornecedor>.CreateAsync(fornecedores.AsNoTracking(), _context.Fornecedor.ToList(), pageNumber ?? 1, pageSize));
         }
 
         public async Task<IActionResult> SN()
@@ -147,33 +147,61 @@ namespace Fornecedores.Controllers
             ViewBag.usuario = usuario;
             ViewBag.autenticado = autenticado;
 
+            var users = this._context.Usuario.Select(s => new
+            {
+                UId = s.UserId,
+                UNome = s.Nome
+            }).ToList();
+            ViewBag.Resp = new SelectList(users, "UNome", "UNome");
 
-
+            var cats = _context.ItemCategorias.Select(s => new
+            {
+                CId = s.CatId,
+                CNome = s.CatNome
+            }).ToList();
+            ViewBag.Categorias = new MultiSelectList(cats, "CNome", "CNome");
+        
             return View();
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,NomeFantasia,RazaoSocial,Categoria,CNPJ,DataCadastro,Endereco,Cidade,Estado,Responsavel,Telefone,Email")] Fornecedor fornecedor)
+        public async Task<IActionResult> Create([Bind("Id,NomeFantasia,RazaoSocial,Categoria,CNPJ,DataCadastro,Endereco,Cidade,Estado,Responsavel,Telefone,Email,CatItem")] Fornecedor fornecedor) 
         {
-
             if (_context.Fornecedor.Any(c => c.CNPJ == fornecedor.CNPJ))
             {
                 ModelState.AddModelError("CNPJ", $"Esse CNPJ já está registrado.");
+
+                var cats = _context.ItemCategorias.Select(s => new
+                {
+                    CId = s.CatId,
+                    CNome = s.CatNome
+                }).ToList();
+                ViewBag.Categorias = new MultiSelectList(cats, "CNome", "CNome");
+                var users = this._context.Usuario.Select(s => new
+                {
+                    UId = s.UserId,
+                    UNome = s.Nome
+                }).ToList();
+                ViewBag.Resp = new SelectList(users, "UNome", "UNome");
+
+
             }
             if (_context.Fornecedor.Any(c => c.RazaoSocial == fornecedor.RazaoSocial))
             {
                 ModelState.AddModelError("RazaoSocial", $"Essa Razão Social já está registrada.");
             }
-            
+
             if (ModelState.IsValid)
             {
+                string scat = string.Join(",", fornecedor.Categoria);
+                
+                fornecedor.CatItem = scat;
+
                 _context.Add(fornecedor);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-
-
             return View(fornecedor);
         }
 
@@ -202,7 +230,29 @@ namespace Fornecedores.Controllers
                 return NotFound();
             }
 
-            var fornecedor = await _context.Fornecedor.FindAsync(id);
+            var users = this._context.Usuario.Select(s => new
+            {
+                UId = s.UserId,
+                UNome = s.Nome
+            }).ToList();
+            ViewBag.Resp = new SelectList(users, "UNome", "UNome");
+
+            var cats = _context.ItemCategorias.Select(s => new
+            {
+                CId = s.CatId,
+                CNome = s.CatNome
+            }).ToList();
+            ViewBag.Categorias = new MultiSelectList(cats, "CNome", "CNome");
+
+            Fornecedor fornecedor = _context.Fornecedor.Find(id);
+
+
+           List<string> sl = fornecedor.CatItem.Split(',').ToList();
+
+           fornecedor.Categoria = sl;
+
+
+          fornecedor = await _context.Fornecedor.FindAsync(id);
             if (fornecedor == null)
             {
                 return NotFound();
@@ -212,16 +262,19 @@ namespace Fornecedores.Controllers
          
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,NomeFantasia,RazaoSocial,Categoria,CNPJ,DataCadastro,Endereco,Cidade,Estado,Responsavel,Telefone,Email")] Fornecedor fornecedor)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,NomeFantasia,RazaoSocial,Categoria,CNPJ,DataCadastro,Endereco,Cidade,Estado,Responsavel,Telefone,Email,CatItem")] Fornecedor fornecedor)
         {
             if (id != fornecedor.Id)
             {
                 return NotFound();
-            }
-                
+            }                
 
             if (ModelState.IsValid)
             {
+                string scat = string.Join(", ", fornecedor.Categoria);
+
+                fornecedor.CatItem = scat;
+
                 try
                 {
                     _context.Update(fornecedor);
@@ -275,6 +328,4 @@ namespace Fornecedores.Controllers
             return _context.Fornecedor.Any(e => e.Id == id);
         }
     }
-
-
 }

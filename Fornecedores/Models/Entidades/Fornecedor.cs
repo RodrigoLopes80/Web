@@ -29,7 +29,10 @@ namespace Fornecedores.Models.Entidades
         [Required(ErrorMessage = "O campo Categoria é obrigatório")]
         [MaxLength(30)]
         [Display(Name = "Categoria", Description = "Categoria")]
-        public string Categoria { get; set; }
+        [NotMapped]
+        public IEnumerable<string> Categoria { get; set; }
+        public IEnumerable<ItemCategoria> Cats { get; set; }
+        public string CatItem { get; set; }
 
         [Required(ErrorMessage = "O campo CNPJ é obrigatório")]
         [MaxLength(18)]

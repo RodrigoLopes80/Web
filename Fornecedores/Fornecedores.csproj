@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\HomeController.cs" />
-    <Compile Remove="Models\Entidades\ItemCategoria.cs" />
   </ItemGroup>
   
   <ItemGroup>
