@@ -44,6 +44,7 @@ namespace Fornecedores.Models.Entidades
         [Display(Name = "Data do Cadastro", Description = "Data do Cadastro")]
         [Required(ErrorMessage = "O campo Data do Cadastro é obrigatório.")]
         [DataType(DataType.Date)]
+        [DataLimite(ErrorMessage  = "A Data não pode ser superior a Data Atual")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DataCadastro { get; set; }
 
@@ -82,7 +83,7 @@ namespace Fornecedores.Models.Entidades
         public string Email { get; set; }
 
         public bool Exclusao { get; set; }
-     
+  
     } 
 
 }

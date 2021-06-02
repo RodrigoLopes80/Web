@@ -28,7 +28,6 @@ namespace Fornecedores.Controllers
             var usuario = new Usuario();
             return View(usuario.GetUsuarios());
         }
-
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
 
@@ -98,7 +97,6 @@ namespace Fornecedores.Controllers
 
         public async Task<IActionResult> Details(int? id)
         {
-
             var usuario = "Anônimo";
             var autenticado = false;
             if (HttpContext.User.Identity.IsAuthenticated)
@@ -168,7 +166,7 @@ namespace Fornecedores.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,NomeFantasia,RazaoSocial,Categoria,CNPJ,DataCadastro,Endereco,Cidade,Estado,Responsavel,Telefone,Email,CatItem")] Fornecedor fornecedor) 
         {
-            if (_context.Fornecedor.Any(c => c.CNPJ == fornecedor.CNPJ))
+                if (_context.Fornecedor.Any(c => c.CNPJ == fornecedor.CNPJ))
             {
                 ModelState.AddModelError("CNPJ", $"Esse CNPJ já está registrado.");
 
@@ -184,14 +182,44 @@ namespace Fornecedores.Controllers
                     UNome = s.Nome
                 }).ToList();
                 ViewBag.Resp = new SelectList(users, "UNome", "UNome");
-
-
             }
+
+
+            if (_context.Fornecedor.Any(c => c.CNPJ == null))
+            {
+                ModelState.AddModelError("CNPJ", $"Esse CNPJ já está registrado.");
+
+                var cats = _context.ItemCategorias.Select(s => new
+                {
+                    CId = s.CatId,
+                    CNome = s.CatNome
+                }).ToList();
+                ViewBag.Categorias = new MultiSelectList(cats, "CNome", "CNome");
+                var users = this._context.Usuario.Select(s => new
+                {
+                    UId = s.UserId,
+                    UNome = s.Nome
+                }).ToList();
+                ViewBag.Resp = new SelectList(users, "UNome", "UNome");
+            }
+
             if (_context.Fornecedor.Any(c => c.RazaoSocial == fornecedor.RazaoSocial))
             {
                 ModelState.AddModelError("RazaoSocial", $"Essa Razão Social já está registrada.");
+                var cats = _context.ItemCategorias.Select(s => new
+                {
+                    CId = s.CatId,
+                    CNome = s.CatNome
+                }).ToList();
+                ViewBag.Categorias = new MultiSelectList(cats, "CNome", "CNome");
+                var users = this._context.Usuario.Select(s => new
+                {
+                    UId = s.UserId,
+                    UNome = s.Nome
+                }).ToList();
+                ViewBag.Resp = new SelectList(users, "UNome", "UNome");
             }
-
+            
             if (ModelState.IsValid)
             {
                 string scat = string.Join(",", fornecedor.Categoria);
@@ -222,8 +250,6 @@ namespace Fornecedores.Controllers
 
             ViewBag.usuario = usuario;
             ViewBag.autenticado = autenticado;
-
-
 
             if (id == null)
             {
