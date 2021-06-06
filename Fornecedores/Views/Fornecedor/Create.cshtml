@@ -25,15 +25,16 @@
             </div>
             <div class="form-group">
                 <label asp-for="Categoria" class="control-label"></label>
-                <select asp-for="Categoria" id="categoria" multiple="multiple" asp-items="ViewBag.Categorias" class="form-control">       
+                <select asp-for="Categoria" id="categoria" multiple="multiple" asp-items="ViewBag.Categorias" class="form-control">
                 </select>
                 <span asp-validation-for="Categoria" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CNPJ" class="control-label"></label>
-                <input asp-for="CNPJ" id="cnpj"  placeholder="Somente números" class="form-control" />
+                <input asp-for="CNPJ" id="cnpj" placeholder="Somente números" class="form-control" />
                 <span asp-validation-for="CNPJ" class="text-danger"></span>
             </div>
+             
             <div class="form-group">
                 <label asp-for="DataCadastro" class="control-label"></label>
                 <input asp-for="DataCadastro" class="form-control" />
@@ -85,12 +86,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Responsavel" class="control-label"></label>
-                <select asp-for="Responsavel" asp-items="ViewBag.Resp" class="form-control"> <option value="">Selecione um Responsável</option> </select>        
+                <select asp-for="Responsavel" asp-items="ViewBag.Resp" class="form-control"> <option value="">Selecione um Responsável</option> </select>
                 <span asp-validation-for="Responsavel" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Telefone" class="control-label"></label>
-                <input asp-for="Telefone" id="tel"placeholder="somente números" class="form-control" />
+                <input asp-for="Telefone" id="tel" placeholder="somente números" class="form-control" />
                 <span asp-validation-for="Telefone" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -123,8 +124,15 @@
                 //multiselectlist
                 $("#categoria").select2({
                     placeholder: "Selecione a(s) categoria(s)",
-                    allowClear: true
+                    allowClear: true,
+                    minimumResultsForSearch: Infinity
                 });
+
+                $("#categoria").on('select2:opening select2:closing', function (event) {
+                    var $searchfield = $(this).parent().find('.select2-search__field');
+                    $searchfield.prop('disabled', true);
+                });
+
             });
         </script>
     }

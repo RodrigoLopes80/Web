@@ -30,7 +30,6 @@ namespace Fornecedores.Controllers
         }
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
-
             var usuario = "Anônimo";
             var autenticado = false;
             if (HttpContext.User.Identity.IsAuthenticated)
@@ -45,12 +44,20 @@ namespace Fornecedores.Controllers
             }
 
             ViewBag.usuario = usuario;
-            ViewBag.autenticado = autenticado;
-       
+            ViewBag.autenticado = autenticado;       
 
             ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewData["NomeSortParm"] = sortOrder == "Nome" ? "nome_desc" : "Nome";
+            ViewData["RazaoSortParm"] = sortOrder == "Razao" ? "name_desc" : "Razao";
+            ViewData["CatSortParm"] = sortOrder == "Cat" ? "cat_desc" : "Cat";
+            ViewData["CNPJSortParm"] = sortOrder == "CNPJ" ? "cnpj_desc" : "CNPJ";
+            ViewData["DataSortParm"] = sortOrder == "Data" ? "data_desc" : "Data";
+            ViewData["EndSortParm"] = sortOrder == "End" ? "end_desc" : "End";
+            ViewData["CitySortParm"] = sortOrder == "City" ? "city_desc" : "City";
+            ViewData["EstSortParm"] = sortOrder == "Est" ? "est_desc" : "Est";
+            ViewData["RespSortParm"] = sortOrder == "Resp" ? "resp_desc" : "Resp";
+            ViewData["TelSortParm"] = sortOrder == "Tel" ? "tel_desc" : "Tel";
+            ViewData["MailSortParm"] = sortOrder == "Mail" ? "mail_desc" : "Mail";
 
             if (searchString != null)
             {
@@ -72,15 +79,69 @@ namespace Fornecedores.Controllers
             }
             switch (sortOrder)
             {
-                case "name_desc":
+                case "Nome":
+                    fornecedores = fornecedores.OrderBy(s => s.NomeFantasia);
+                    break;
+                case "nome_desc":
+                    fornecedores = fornecedores.OrderByDescending(s => s.NomeFantasia);
+                    break;
+                case "razao_desc":
                     fornecedores = fornecedores.OrderByDescending(s => s.RazaoSocial);
                     break;
-                case "Date":
+                case "Cat":
+                    fornecedores = fornecedores.OrderBy(s => s.Categoria);
+                    break;
+                case "cat_desc":
+                    fornecedores = fornecedores.OrderByDescending(s => s.Categoria);
+                    break;
+                case "CNPJ":
+                    fornecedores = fornecedores.OrderBy(s => s.CNPJ);
+                    break;
+                case "cnpj_desc":
+                    fornecedores = fornecedores.OrderByDescending(s => s.CNPJ);
+                    break;
+                case "Data":
                     fornecedores = fornecedores.OrderBy(s => s.DataCadastro);
                     break;
-                //case "date_desc":
-                //    fornecedores = fornecedores.OrderByDescending(s => s.date);
-                //    break;
+                case "data_desc":
+                    fornecedores = fornecedores.OrderByDescending(s => s.DataCadastro);
+                    break;
+                case "End":
+                    fornecedores = fornecedores.OrderBy(s => s.Endereco);
+                    break;
+                case "end_desc":
+                    fornecedores = fornecedores.OrderByDescending(s => s.Endereco);
+                    break;
+                case "City":
+                    fornecedores = fornecedores.OrderBy(s => s.Cidade);
+                    break;
+                case "city_desc":
+                    fornecedores = fornecedores.OrderByDescending(s => s.Cidade);
+                    break;
+                case "Est":
+                    fornecedores = fornecedores.OrderBy(s => s.Estado);
+                    break;
+                case "est_desc":
+                    fornecedores = fornecedores.OrderByDescending(s => s.Estado);
+                    break;
+                case "Resp":
+                    fornecedores = fornecedores.OrderBy(s => s.Responsavel);
+                    break;
+                case "resp_desc":
+                    fornecedores = fornecedores.OrderByDescending(s => s.Responsavel);
+                    break;
+                case "Tel":
+                    fornecedores = fornecedores.OrderBy(s => s.Telefone);
+                    break;
+                case "tel_desc":
+                    fornecedores = fornecedores.OrderByDescending(s => s.Telefone);
+                    break;
+                case "Mail":
+                    fornecedores = fornecedores.OrderBy(s => s.Email);
+                    break;
+                case "mail_desc":
+                    fornecedores = fornecedores.OrderByDescending(s => s.Email);
+                    break;
                 default:
                     fornecedores = fornecedores.OrderBy(s => s.RazaoSocial);
                     break;
@@ -166,62 +227,45 @@ namespace Fornecedores.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,NomeFantasia,RazaoSocial,Categoria,CNPJ,DataCadastro,Endereco,Cidade,Estado,Responsavel,Telefone,Email,CatItem")] Fornecedor fornecedor) 
         {
-                if (_context.Fornecedor.Any(c => c.CNPJ == fornecedor.CNPJ))
+            if (_context.Fornecedor.Any(c => c.CNPJ == fornecedor.CNPJ))
             {
-                ModelState.AddModelError("CNPJ", $"Esse CNPJ já está registrado.");
-
-                var cats = _context.ItemCategorias.Select(s => new
-                {
-                    CId = s.CatId,
-                    CNome = s.CatNome
-                }).ToList();
-                ViewBag.Categorias = new MultiSelectList(cats, "CNome", "CNome");
-                var users = this._context.Usuario.Select(s => new
-                {
-                    UId = s.UserId,
-                    UNome = s.Nome
-                }).ToList();
-                ViewBag.Resp = new SelectList(users, "UNome", "UNome");
-            }
-
+                ModelState.AddModelError("CNPJ", $"Esse CNPJ já está registrado.");            
+            }        
 
             if (_context.Fornecedor.Any(c => c.CNPJ == null))
             {
                 ModelState.AddModelError("CNPJ", $"Esse CNPJ já está registrado.");
 
-                var cats = _context.ItemCategorias.Select(s => new
-                {
-                    CId = s.CatId,
-                    CNome = s.CatNome
-                }).ToList();
-                ViewBag.Categorias = new MultiSelectList(cats, "CNome", "CNome");
-                var users = this._context.Usuario.Select(s => new
-                {
-                    UId = s.UserId,
-                    UNome = s.Nome
-                }).ToList();
-                ViewBag.Resp = new SelectList(users, "UNome", "UNome");
             }
 
             if (_context.Fornecedor.Any(c => c.RazaoSocial == fornecedor.RazaoSocial))
             {
-                ModelState.AddModelError("RazaoSocial", $"Essa Razão Social já está registrada.");
-                var cats = _context.ItemCategorias.Select(s => new
-                {
-                    CId = s.CatId,
-                    CNome = s.CatNome
-                }).ToList();
-                ViewBag.Categorias = new MultiSelectList(cats, "CNome", "CNome");
+                ModelState.AddModelError("RazaoSocial", $"Essa Razão Social já está registrada.");           
+            }
+
+
+
+            if (!ModelState.IsValid)
+            {
                 var users = this._context.Usuario.Select(s => new
                 {
                     UId = s.UserId,
                     UNome = s.Nome
                 }).ToList();
                 ViewBag.Resp = new SelectList(users, "UNome", "UNome");
+
+                var cats = _context.ItemCategorias.Select(s => new
+                {
+                    CId = s.CatId,
+                    CNome = s.CatNome
+                }).ToList();
+                ViewBag.Categorias = new MultiSelectList(cats, "CNome", "CNome");
+
             }
-            
-            if (ModelState.IsValid)
-            {
+
+
+
+                if (ModelState.IsValid){
                 string scat = string.Join(",", fornecedor.Categoria);
                 
                 fornecedor.CatItem = scat;
@@ -229,7 +273,7 @@ namespace Fornecedores.Controllers
                 _context.Add(fornecedor);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
+                }
             return View(fornecedor);
         }
 
@@ -273,12 +317,14 @@ namespace Fornecedores.Controllers
             Fornecedor fornecedor = _context.Fornecedor.Find(id);
 
 
-           List<string> sl = fornecedor.CatItem.Split(',').ToList();
+            List<string> sl = fornecedor.CatItem.Split(',').ToList();
 
-           fornecedor.Categoria = sl;
+            fornecedor.Categoria = sl;
 
 
-          fornecedor = await _context.Fornecedor.FindAsync(id);
+
+
+            fornecedor = await _context.Fornecedor.FindAsync(id);
             if (fornecedor == null)
             {
                 return NotFound();
@@ -297,7 +343,7 @@ namespace Fornecedores.Controllers
 
             if (ModelState.IsValid)
             {
-                string scat = string.Join(", ", fornecedor.Categoria);
+                string scat = string.Join(',', fornecedor.Categoria);
 
                 fornecedor.CatItem = scat;
 
@@ -335,7 +381,6 @@ namespace Fornecedores.Controllers
             {
                 return NotFound();
             }
-
             return View(fornecedor);
         }
 

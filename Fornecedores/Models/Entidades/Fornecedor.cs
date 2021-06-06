@@ -83,7 +83,8 @@ namespace Fornecedores.Models.Entidades
         public string Email { get; set; }
 
         public bool Exclusao { get; set; }
-  
+
+      
     } 
 
 }

@@ -32,7 +32,6 @@ namespace Fornecedores.Models.Entidades
                     return new ValidationResult(this.FormatErrorMessage(validationContext.DisplayName));
                 }
             }
-
             return null;
         }
 
