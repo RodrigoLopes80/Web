@@ -45,7 +45,7 @@ namespace Fornecedores.Models.Entidades
         [Required(ErrorMessage = "O campo Data do Cadastro é obrigatório.")]
         [DataType(DataType.Date)]
         [DataLimite(ErrorMessage  = "A Data não pode ser superior a Data Atual")]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? DataCadastro { get; set; }
 
         [MaxLength(50)]
@@ -77,7 +77,7 @@ namespace Fornecedores.Models.Entidades
         public string Telefone { get; set; }    
 
         [Required(ErrorMessage = "O campo E-mail é obrigatório.")]
-        [MaxLength(60)]
+
         [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "Este E-mail não é válido.")]
         [Display(Name = "E-mail", Description = "E-mail")]
         public string Email { get; set; }

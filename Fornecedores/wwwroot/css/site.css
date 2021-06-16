@@ -13,18 +13,21 @@ a.navbar-brand {
     font-family:'Futura Md BT';    
 }
 
+table table-striped table-bordered table-hover{
+    width:160%;
+}
 
 
-a {
+a{
     color: white;
-    text-decoration:solid;
-    background-color: transparent; 
+    text-decoration: solid;
+    background-color: transparent;
 }
 
 
 navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-primary box-shadow mb-3
 
-a {
+a{
     color: #0366d6;
 }
 
@@ -71,24 +74,24 @@ html {
 }
 
 .container {
-    width: 140%;
-    margin-right: 280px;
-    margin-left: 280px;
+    width: 100%;
+    margin-right: 40px;
+    margin-left: 180px; 
+    font-size:12px;
 
 }
 
 .table {
     border-spacing: 2px;
-    table-layout:unset;
+    white-space:nowrap;
+    color:black;
+    vertical-align:middle;
+    text-align:start;
+
 }
 
 body {
-    background: url("/lib/fundo.jpg") no-repeat right top fixed;
-}
-
-th{
-    text-align:center;
-
+    background: url("/lib/back.jpg") no-repeat right top fixed;
 }
 
     th.col11 {
@@ -104,20 +107,22 @@ td.col1 {
 
 
 .table thead th {
-    vertical-align: middle;
-    table-layout: unset;
-    width: 140%;
+ 
+    table-layout: fixed;
+    width: 100%;
     border-bottom: 4px solid #2f7fd0;
     border-top: 4px solid #2f7fd0;
-    justify-content: left;
+    justify-content:center;
+    vertical-align:middle;
+    text-align:center;
 }
 
 .table td, .table th {
-    padding: .75rem;
-    table-layout: unset;
-    width: 140%;
+    table-layout: fixed;
+    width: 100%;
     vertical-align: middle;
     border-top: 1px solid #808080;
+    justify-content:stretch;
 }
 
 .footer {

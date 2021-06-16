@@ -48,7 +48,7 @@ namespace Fornecedores.Controllers
 
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NomeSortParm"] = sortOrder == "Nome" ? "nome_desc" : "Nome";
-            ViewData["RazaoSortParm"] = sortOrder == "Razao" ? "name_desc" : "Razao";
+            ViewData["RazaoSortParm"] = sortOrder == "Razao" ? "razao_desc" : "Razao";
             ViewData["CatSortParm"] = sortOrder == "Cat" ? "cat_desc" : "Cat";
             ViewData["CNPJSortParm"] = sortOrder == "CNPJ" ? "cnpj_desc" : "CNPJ";
             ViewData["DataSortParm"] = sortOrder == "Data" ? "data_desc" : "Data";
@@ -85,14 +85,17 @@ namespace Fornecedores.Controllers
                 case "nome_desc":
                     fornecedores = fornecedores.OrderByDescending(s => s.NomeFantasia);
                     break;
+                case "Razao":
+                    fornecedores = fornecedores.OrderBy(s => s.RazaoSocial);
+                    break;
                 case "razao_desc":
                     fornecedores = fornecedores.OrderByDescending(s => s.RazaoSocial);
                     break;
                 case "Cat":
-                    fornecedores = fornecedores.OrderBy(s => s.Categoria);
+                    fornecedores = fornecedores.OrderBy(s => s.CatItem);
                     break;
                 case "cat_desc":
-                    fornecedores = fornecedores.OrderByDescending(s => s.Categoria);
+                    fornecedores = fornecedores.OrderByDescending(s => s.CatItem);
                     break;
                 case "CNPJ":
                     fornecedores = fornecedores.OrderBy(s => s.CNPJ);
@@ -141,10 +144,7 @@ namespace Fornecedores.Controllers
                     break;
                 case "mail_desc":
                     fornecedores = fornecedores.OrderByDescending(s => s.Email);
-                    break;
-                default:
-                    fornecedores = fornecedores.OrderBy(s => s.RazaoSocial);
-                    break;
+                    break;            
             }
             
             int pageSize = 4;

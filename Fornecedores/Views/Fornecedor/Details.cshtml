@@ -1,5 +1,4 @@
-﻿
-@model Fornecedores.Models.Entidades.Fornecedor
+﻿@model Fornecedores.Models.Entidades.Fornecedor
 
 @{
     ViewData["Title"] = "Details";
@@ -39,7 +38,10 @@
             @Html.DisplayNameFor(model => model.DataCadastro)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataCadastro)
+            @if (@Model.DataCadastro.Value != null)
+            {@Model.DataCadastro.Value.ToString("dd/MM/yyyy")}
+        else
+        {@Html.DisplayFor(Model => Model.DataCadastro)}
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Endereco)
